@@ -1,6 +1,6 @@
 SO ./textures/bluestone.xpm
 NO ./textures/redbrick.xpm
-WE ./textures/mozzi.xpm
+WE ./textures/barrel.xpm
 EA ./textures/mossy.xpm
 
 F 0,0,250

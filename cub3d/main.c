@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sjin <sjin@student.42seoul.kr>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/01 19:45:31 by seonchoi          #+#    #+#             */
-/*   Updated: 2022/01/27 16:33:39 by sjin             ###   ########seoul.kr  */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
 int	main_loop(t_info *info)
@@ -33,6 +21,20 @@ int	main2(t_info *info)
 	return (1);
 }
 
+int	cub_exit(void)
+{
+	exit(0);
+	return (0);
+}
+
+void	temp(t_info *info)
+{
+	info->tmp = (char *)malloc(sizeof(char) * 1);
+	info->tmp[0] = 'a';
+	info->tmp[1] = '\0';
+	info->player_num = 0;
+}
+
 int	main(int argc, char *argv[])
 {
 	t_info	info;
@@ -40,10 +42,7 @@ int	main(int argc, char *argv[])
 	if (argc == 2)
 	{
 		memory_plus2(&info);
-		info.tmp = (char *)malloc(sizeof(char) * 1);
-		info.tmp[0] = 'a';
-		info.tmp[1] = '\0';
-		info.player_num = 0;
+		temp(&info);
 		if (treat_description(argv[1], &info))
 		{
 			if (!main2(&info))
@@ -55,6 +54,7 @@ int	main(int argc, char *argv[])
 			mlx_loop_hook(info.mlx, &main_loop, &info);
 			mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_press, &info);
 			mlx_hook(info.win, X_EVENT_KEY_RELEASE, 0, &key_release, &info);
+			mlx_hook(info.win, X_EVENT_KEY_EXIT, 0, &cub_exit, 0);
 			mlx_loop(info.mlx);
 		}
 	}
