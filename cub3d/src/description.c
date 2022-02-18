@@ -49,7 +49,7 @@ int	parse_line(char *line, t_info *info)
 				return (0);
 			break ;
 		}
-		else if (is_map_character(line[i]))
+		else if (is_map_character(line[i]) && ++info->map_height)
 			i = i + save_map1(line, info) - num;
 		else
 			return (0);

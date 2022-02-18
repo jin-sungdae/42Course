@@ -18,10 +18,7 @@ int	file_name_check(char *filename)
 		printf("file_name : ERROR\n");
 		return (0);
 	}
-	if (filename[i] == 'b' && filename[i - 1] == 'u' && filename[i - 2]
-		== 'c' && filename[i - 3] == '.')
-		return (1);
-	return (0);
+	return (1);
 }
 
 int	file_exists(char *file_name)

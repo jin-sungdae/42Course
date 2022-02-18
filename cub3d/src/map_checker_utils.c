@@ -27,7 +27,7 @@ int	map_checker2(t_info *info, char **test_map)
 		write(1, "No place\n", 9);
 		return (0);
 	}
-	if (info->player_num != 1)
+	if (info->player_num > 1)
 	{
 		printf("player num error (%d)\n", info->player_num);
 		return (0);
@@ -38,7 +38,7 @@ int	map_checker2(t_info *info, char **test_map)
 		return (0);
 	}
 	write(1, "Map check : OK\n", 15);
-	free_map(test_map, 103);
+	free_map(test_map, info->map_height + 3);
 	return (1);
 }
 
@@ -46,4 +46,12 @@ void	init_put_num(t_info *info)
 {
 	info->is_zero = 0;
 	info->p = 0;
+}
+
+int		ft_max(int a, int b)
+{
+	if (a >= b)
+		return (a);
+	else
+		return (b);
 }

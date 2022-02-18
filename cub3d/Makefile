@@ -4,7 +4,7 @@ FLAGS = -Wall -Wextra -Werror
 GNL = ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c
 SRCS = ./src/load_image.c ./src/raycasting.c ./src/description.c ./src/description1.c ./src/description2.c  ./src/key.c ./src/key1.c ./src/floar_ceiling.c ./src/map_checker.c \
  	./src/map_player.c  ./src/memory.c ./src/libft1.c ./src/libft2.c ./src/libft3.c ./src/map_checker_utils.c \
- 	./src/free_memory.c ./main.c
+ 	./main.c
 
 NAME = cub3d
 OBJS = ${SRCS:.c=.o}
@@ -21,7 +21,7 @@ ${NAME} : ${OBJS} ${OBJ}
 clean :
 	rm -rf $(OBJ) ${OBJS} 
 
-fclean :
+fclean : clean
 	rm -rf ${NAME}
 
 re : fclean all
