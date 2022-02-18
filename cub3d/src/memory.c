@@ -31,29 +31,11 @@ int	memory_plus(t_info *info)
 
 int	memory_plus2(t_info *info)
 {
-	info->m_x2 = 0;
 	info->path = (char **)malloc(sizeof(char *) * 4);
 	if (!info->path)
 		return (-1);
-	while (info->m_x2 < 4)
-	{
-		info->path[info->m_x2] = (char *)malloc(sizeof(char) * (TEX_H * TEX_W));
-		if (!info->path[info->m_x2])
-			return (-1);
-		info->m_x2++;
-	}
-	info->m_x2 = 0;
-	while (info->m_x2 < 4)
-	{
-		info->m_y2 = 0;
-		while (info->m_y2 < TEX_H * TEX_W)
-		{
-			info->path[info->m_x2][info->m_y2] = 0;
-			info->m_y2++;
-		}
-		info->m_x2++;
-	}
-	free_path(info);
+	info->map_height = 0;
+	info->map_width = 0;
 	return (0);
 }
 

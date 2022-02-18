@@ -21,6 +21,7 @@ int	save_map1(char *line, t_info *info)
 	}
 	info->tmp = ft_strjoin1(info->tmp, line);
 	info->tmp = ft_strjoin1(info->tmp, "a");
+	info->map_width = ft_max(info->map_width, line_len);
 	return (line_len);
 }
 

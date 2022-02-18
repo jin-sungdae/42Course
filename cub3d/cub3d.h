@@ -1,7 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "mlx.h"
+# include "minilibx/mlx.h"
 # include <math.h>
 # include <string.h>
 # include <stdio.h>
@@ -73,8 +73,8 @@ typedef struct s_info
 	int		m_y;
 	int		m_x1;
 	int		m_y1;
-	int		m_x2;
-	int		m_y2;
+	int		map_width;
+	int		map_height;
 	double	pos_x;
 	double	pos_y;
 	double	dir_x;
@@ -171,6 +171,6 @@ int		check_map(char **map, int x, int y, int *p);
 int		free_map(char **map, int cnt);
 int		map_checker(t_info *info);
 int		map_checker2(t_info *info, char **test_map);
+int		ft_max(int a, int b);
 
-void	free_path(t_info *info);
 #endif

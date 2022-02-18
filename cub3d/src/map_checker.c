@@ -26,19 +26,19 @@ char	**init_map(char **map, t_info *info)
 {
 	char	**testmap;
 
-	testmap = (char **)malloc(sizeof(char *) * 103);
+	testmap = (char **)malloc(sizeof(char *) * info->map_height + 3);
 	if (!testmap)
 		return (0);
-	testmap[102] = 0;
+	testmap[info->map_height + 2] = 0;
 	info->m_y = -1;
-	while (++info->m_y < 102)
+	while (++info->m_y < info->map_height + 2)
 	{
-		testmap[info->m_y] = (char *)malloc(sizeof(char) * 103);
+		testmap[info->m_y] = (char *)malloc(sizeof(char) * info->map_width + 3);
 		if (!testmap[info->m_y])
 			return (0);
-		testmap[info->m_y][102] = 0;
+		testmap[info->m_y][info->map_width + 2] = 0;
 		info->m_x = -1;
-		while (++info->m_x < 102)
+		while (++info->m_x < info->map_width + 2)
 			testmap[info->m_y][info->m_x] = ' ';
 	}
 	info->m_y = -1;
@@ -80,7 +80,7 @@ int	map_checker(t_info *info)
 				if (check_map(testmap, info->m_x1, info->m_y1, &info->p) == 0)
 				{
 					write(1, "Map check : ERROR\n", 19);
-					free_map(testmap, 103);
+					free_map(testmap, info->map_height + 3);
 					return (0);
 				}
 			}
