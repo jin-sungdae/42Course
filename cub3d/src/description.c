@@ -17,7 +17,10 @@ int	treat_description(char *file_name, t_info *info)
 	while (gnl_return == 1)
 	{
 		if (!parse_line(line, info))
+		{
+			printf("parse something : Error\n");
 			return (0);
+		}
 		free(line);
 		gnl_return = get_next_line(fd, &line);
 	}
@@ -41,7 +44,11 @@ int	parse_line(char *line, t_info *info)
 			num++;
 		}
 		else if (is_type_identifier(line[i], line[i + 1], line, info))
+		{
+			if (is_type_identifier(line[i], line[i + 1], line, info) == 2)
+				return (0);
 			break ;
+		}
 		else if (is_map_character(line[i]))
 			i = i + save_map1(line, info) - num;
 		else
@@ -52,36 +59,22 @@ int	parse_line(char *line, t_info *info)
 
 int	is_type_identifier(char a, char b, char *line, t_info *info)
 {
+	int	flag;
+
+	flag = 1;
 	if (((a == 'F' || a == 'C') && is_space(b)))
 		config_color(a, line + 1, info);
 	else if (a == 'N' && b == 'O')
-		config_path(0, line + 2, info);
+		flag = config_path(0, line + 2, info);
 	else if (a == 'S' && b == 'O')
-		config_path(1, line + 2, info);
+		flag = config_path(1, line + 2, info);
 	else if (a == 'W' && b == 'E')
-		config_path(2, line + 2, info);
+		flag = config_path(2, line + 2, info);
 	else if (a == 'E' && b == 'A')
-		config_path(3, line + 2, info);
+		flag = config_path(3, line + 2, info);
 	else
 		return (0);
-	return (1);
-}
-
-int	check_line(char *line)
-{
-	int		i;
-
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == '0' || line[i] == '1' || line[i] == 'N'
-			|| line[i] == 'S' || line[i] == 'W' || line[i] == 'E')
-			i++;
-		else
-		{
-			printf("Something Wrong\n");
-			return (0);
-		}
-	}
+	if (!flag)
+		return (2);
 	return (1);
 }

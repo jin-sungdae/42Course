@@ -49,7 +49,7 @@ int	config_path(int index, char *line, t_info *info)
 	end = ft_strlen(line);
 	path = ft_substr(line, start, end - start);
 	if (!path || !file_exists(path))
-		return (-1);
+		return (0);
 	info->path[index] = path;
 	return (1);
 }
