@@ -15,7 +15,7 @@ int	file_name_check(char *filename)
 	if (!filename || !(filename[i] == 'b' && filename[i - 1] == 'u'
 			&& filename[i - 2] == 'c' && filename[i - 3] == '.'))
 	{
-		printf("error\n");
+		printf("file_name : ERROR\n");
 		return (0);
 	}
 	if (filename[i] == 'b' && filename[i - 1] == 'u' && filename[i - 2]
@@ -31,16 +31,16 @@ int	file_exists(char *file_name)
 
 	len = ft_strlen1(file_name);
 	if (!file_name || len == 0)
-		return (-1);
+		return (0);
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 	{
 		close(fd);
-		return (-1);
+		return (0);
 	}
 	if (!(file_name[len - 4] == '.' && file_name[len - 3] == 'x'
 			&& file_name[len - 2] == 'p' && file_name[len - 1] == 'm'))
-		return (-1);
+		return (0);
 	return (1);
 }
 

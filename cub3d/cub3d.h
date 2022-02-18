@@ -157,7 +157,6 @@ int		is_type_identifier(char a, char b, char *line, t_info *info);
 int		parse_line(char *line, t_info *info);
 int		treat_description(char *file_name, t_info *info);
 int		main(int argc, char *argv[]);
-int		check_line(char *line);
 int		ft_isdigit(int c);
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
