@@ -34,7 +34,7 @@ int	map_checker2(t_info *info, char **test_map)
 	}
 	if (info->p == 0)
 	{
-		printf("player out\n");
+		printf("not found player Error\n");
 		return (0);
 	}
 	write(1, "Map check : OK\n", 15);
