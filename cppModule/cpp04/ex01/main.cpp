@@ -6,7 +6,7 @@ int main(){
 	Animal *animal[10];
 	Brain *brain;
 
-
+	Animal *newAnimal = new Animal();
 	for (int i = 0; i < 10; i++){
 		if (i > 5){
 			animal[i] = new Dog();
@@ -17,10 +17,10 @@ int main(){
 		std::cout << animal[i]->getType() << std::endl;
 	}
 	brain = animal[7]->getBrain();
-	brain->arry[0] = "I'm hungry";
-	brain->arry[1] = "That's a strange idea I'm having";
-	brain->arry[2] = "Ball!!!!!";
-	brain->arry[3] = "Squirrel!!!!!";
+	brain->arry[0] = "hello world = C";
+	brain->arry[1] = "hello world = CPP";
+	brain->arry[2] = "hello world = python";
+	brain->arry[3] = "hello world = java";
 
 	std::cout << animal[7]->getBrain()->arry[0] << std::endl;
 
@@ -40,4 +40,5 @@ int main(){
 	for (int i = 0; i < 10; i++){
 		delete animal[i];
 	}
+
 }

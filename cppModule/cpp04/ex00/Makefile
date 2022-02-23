@@ -1,6 +1,6 @@
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 SRCS = ./main.cpp ./Animal.cpp ./Cat.cpp ./Dog.cpp ./WrongAnimal.cpp ./WrongCat.cpp
-NAME = UpCasting
+NAME = Animal
 
 OBJS = ${SRCS:.c=.o}
 all : ${NAME}

@@ -12,7 +12,7 @@ public:
 	Dog & operator=(Dog const & d);
 	virtual Animal & operator=(Animal const & d);
 	virtual void makeSound() const;
-	Brain *getBrain() const;
+	virtual Brain *getBrain() const;
 
 private:
 	Brain *brain;

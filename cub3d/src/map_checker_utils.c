@@ -48,7 +48,7 @@ void	init_put_num(t_info *info)
 	info->p = 0;
 }
 
-int		ft_max(int a, int b)
+int	ft_max(int a, int b)
 {
 	if (a >= b)
 		return (a);

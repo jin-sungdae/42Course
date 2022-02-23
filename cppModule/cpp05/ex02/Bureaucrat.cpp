@@ -71,7 +71,7 @@ bool Bureaucrat::executeForm(Form & f) const{
 }
 
 bool Bureaucrat::signForm(Form &f) const{
-	if (f.signCheckBool(*this)){
+	if (f.beSigned(*this)){
 		std::cout << this->name << " sign form " << f.getName() << std::endl;
 		return true;
 	}

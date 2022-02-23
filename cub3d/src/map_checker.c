@@ -66,7 +66,7 @@ int	free_map(char **map, int cnt)
 int	map_checker(t_info *info)
 {
 	char	**testmap;
-	int zzz = 0;
+
 	testmap = init_map(info->map, info);
 	init_put_num(info);
 	info->m_y1 = -1;

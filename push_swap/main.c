@@ -46,7 +46,10 @@ int	main(int argc, char *argv[])
 		return (0);
 	stack = init_stack(argc, argv);
 	if (!check_error(&stack))
+	{
+		ft_putstr_fd("error\n", 1);
 		return (0);
+	}
 	if (!a_to_b(&stack, stack.alen))
 		delete_stack(stack);
 	delete_stack(stack);

@@ -59,19 +59,9 @@ void Bureaucrat::checkGrade (){
 		throw Bureaucrat::GradeTooLowException();
 }
 
-bool Bureaucrat::executeForm(Form & f) const{
-	try{
-		f.checkExecuteGrade(*this);
-		std::cout << this->name << "execute form" << f.getName() << std::endl;
-		return true;
-	} catch (Form::CantExecuteForm &e){
-		std::cout << e.what() << std::endl;
-		return false;
-	}
-}
 
 bool Bureaucrat::signForm(Form &f) const{
-	if (f.signCheckBool(*this)){
+	if (f.beSigned(*this)){
 		std::cout << this->name << " sign form " << f.getName() << std::endl;
 		return true;
 	}

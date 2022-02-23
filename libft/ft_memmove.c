@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sjin <sjin@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/21 11:52:54 by sjin              #+#    #+#             */
+/*   Updated: 2020/12/27 21:04:02 by sjin             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 void	*ft_memmove(void *dest, const void *src, size_t count)
@@ -13,7 +25,7 @@ void	*ft_memmove(void *dest, const void *src, size_t count)
 		return (NULL);
 	if (dest > src)
 	{
-		while (count--)
+		while (count-- > 0)
 			dest_1[count] = src_1[count];
 	}
 	else

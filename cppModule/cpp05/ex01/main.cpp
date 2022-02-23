@@ -17,6 +17,7 @@ int main(){
 		std::cout << "a2 execption " << e.what() << std::endl;
 	}
 	std::cout << std::endl;
+
 	try{
 		Form a("a3", 1, 151);
 		std::cout << a;
@@ -24,6 +25,7 @@ int main(){
 		std::cout << "a3 execption " << e.what() << std::endl;
 	}
 	std::cout << std::endl;
+
 	try{
 		Form a("a4", 151, 1);
 		std::cout << a;
@@ -32,7 +34,6 @@ int main(){
 	}
 
 	std::cout << std::endl;
-
 	try{
 		Bureaucrat jin = Bureaucrat("jin", 1);
 		Form f("a1", 150, 150);
@@ -40,8 +41,8 @@ int main(){
 		std::cout << f << std::endl;
 		jin.signForm(f);
 		std::cout << f << std::endl;
-		jin.executeForm(f);
-		std::cout << f << std::endl;
+
+
 	} catch (std::exception &e){
 		std::cout << "jin execption " << e.what() << std::endl;
 	}
@@ -52,15 +53,9 @@ int main(){
 		Form f("a2", 1, 1);
 		std::cout << f << std::endl;
 		jon.signForm(f);
-		std::cout<< f << std::endl;
-		jon.executeForm(f);
 		std::cout << f << std::endl;
 	} catch (std::exception &e){
 		std::cout << "jon execption " << e.what() << std::endl;
 	}
-
 	std::cout << std::endl;
-	
-
-
 }

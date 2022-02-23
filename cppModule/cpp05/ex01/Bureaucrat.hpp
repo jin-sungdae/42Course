@@ -18,7 +18,6 @@ public:
 	void setGrade(int const grade);
 	void increaseGrade(int grade);
 	void decreaseGrade(int grade);
-	bool executeForm(Form & f) const;
 	bool signForm(Form &f) const;
 
 private:

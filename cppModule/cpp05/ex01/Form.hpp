@@ -15,11 +15,12 @@ public:
 	std::string getName() const;
 	int	getSignGrade() const;
 	int getExecuteGrade() const;
-	bool getSignCheck() const;
-
+	bool isSigned() const;
 	void checkGrade() const;
 	void checkExecuteGrade(const Bureaucrat &bureaucrat) const;
-	bool signCheckBool(const Bureaucrat & bureaucrat);
+	bool beSigned(const Bureaucrat & bureaucrat);
+
+
 private:
 	Form();
 	std::string name;
@@ -28,6 +29,7 @@ private:
 	const int executeGrade;
 	static const int lowestGrade = 150;
 	static const int highestGrade = 1;
+
 public:
 	class GradeTooHightException : public std::exception{
 	public:

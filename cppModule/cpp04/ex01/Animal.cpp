@@ -5,11 +5,6 @@ Animal::Animal(){
 	type = "Animal";
 }
 
-Animal::Animal(std::string type){
-	this->type = type;
-	std::cout << "Animal type constructor called" << std::endl;
-}
-
 Animal::~Animal(){
 	std::cout << "Animal destructor called" << std::endl;
 }
@@ -29,12 +24,9 @@ void Animal::makeSound() const{
 	std::cout << "Animal make Sound" << std::endl;
 }
 
-std::string Animal::getType() const{
-	return this->type;
+const std::string &Animal::getType() const{
+	return (this->type);
 }
 
-void Animal::setType(std::string const type){
-	this->type = type;
-}
 
 

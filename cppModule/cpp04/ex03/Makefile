@@ -1,5 +1,5 @@
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = ./main.cpp ./AMateria.cpp ICharacter.cpp IMateriaSource.cpp
+SRCS = ./main.cpp ./AMateria.cpp ./Character.cpp ./MateriaSource.cpp ./Cure.cpp ./Ice.cpp
 NAME = Interface
 
 OBJS = ${SRCS:.c=.o}

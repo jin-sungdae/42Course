@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sjin <sjin@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/27 17:42:59 by sjin              #+#    #+#             */
+/*   Updated: 2020/12/27 19:51:20 by sjin             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-static int	find_char(char const *set, char c)
+static int		find_char(char const *set, char c)
 {
-	size_t	i;
+	size_t i;
 
 	i = 0;
 	while (set[i] != '\0')
@@ -14,7 +26,7 @@ static int	find_char(char const *set, char c)
 	return (0);
 }
 
-char		*ft_strtrim(char const *s, char const *set)
+char			*ft_strtrim(char const *s, char const *set)
 {
 	char	*new_s;
 	size_t	i;

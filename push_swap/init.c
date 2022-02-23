@@ -98,7 +98,6 @@ void	init_tt(t_vt *t)
 	t->i = 1;
 	t->j = 0;
 	t->check = 0;
-
 }
 
 int	*get_stack(char **num, int *len, int *num_check)
@@ -111,20 +110,21 @@ int	*get_stack(char **num, int *len, int *num_check)
 		return (0);
 	res = res_make(num_check);
 	while (t.i < *len)
-    {
+	{
 		while (num[t.i][t.j])
 		{
 			t.check = 0;
 			res[*num_check] = test_function(&num[t.i][t.j], &t.check);
 			*num_check += 1;
 			t.j += t.check;
-			while (num[t.i][t.j] != '\0' && (num[t.i][t.j] == ' ' || num[t.i][t.j] == '\n'
-				|| num[t.i][t.j] == '\t' || num[t.i][t.j] == '\r' || num[t.i][t.j] == '\v'
+			while (num[t.i][t.j] != '\0' && (num[t.i][t.j] == ' '
+				|| num[t.i][t.j] == '\n' || num[t.i][t.j] == '\t'
+				|| num[t.i][t.j] == '\r' || num[t.i][t.j] == '\v'
 				|| num[t.i][t.j] == '\f'))
 				t.j++;
 		}
 		t.j = 0;
 		t.i++;
-    }
+	}
 	return (res);
 }

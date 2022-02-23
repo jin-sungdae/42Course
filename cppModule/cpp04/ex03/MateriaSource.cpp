@@ -34,11 +34,11 @@ MateriaSource &MateriaSource::operator=(MateriaSource const & m){
 	return *this;
 }
 
-void MateriaSource::learnMateria(AMateria* ma){
-	if (this->learnNumber>= 4)
+void MateriaSource::learnMateria(AMateria* amateria){
+	if (this->learnNumber > 4)
 		std::cout << "Can't learn materia" << std::endl;
 	else{
-		this->amteria[this->learnNumber] = ma;
+		this->amteria[this->learnNumber] = amateria;
 		this->learnNumber++;
 		std::cout << "Learn Materia" << std::endl;
 	}

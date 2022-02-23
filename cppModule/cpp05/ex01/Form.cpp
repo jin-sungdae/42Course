@@ -7,6 +7,7 @@ Form::Form() : name("no_name"), signCheck(false),
 
 Form::Form(std::string name,  int signGrade, int executeGrade)
 		: name(name), signGrade(signGrade), executeGrade(executeGrade){
+	this->signCheck = false;
 	this->checkGrade();
 	std::cout << "Form 3 param Constructor called" << std::endl;
 }
@@ -39,23 +40,23 @@ int Form::getExecuteGrade() const{
 	return this->executeGrade;
 }
 
-bool Form::getSignCheck() const{
+bool Form::isSigned() const{
 	return this->signCheck;
 }
 
 void Form::checkGrade() const{
 	if (this->executeGrade < Form::highestGrade || this->signGrade < Form::highestGrade)
 		throw Form::GradeTooHightException();
-	if (this->executeGrade > Form:: lowestGrade || this->signGrade < Form::lowestGrade)
+	if (this->executeGrade > Form:: lowestGrade || this->signGrade > Form::lowestGrade)
 		throw Form::GradeTooLowException();
 }
 
 void Form::checkExecuteGrade(const Bureaucrat &bureaucrat) const{
-	if (this->signCheck == false || bureaucrat.getGrade() < this->executeGrade)
+	if (!this->signCheck || bureaucrat.getGrade() < this->executeGrade)
 		throw Form::CantExecuteForm();
 }
 
-bool Form::signCheckBool(const Bureaucrat & bureaucrat){
+bool Form::beSigned(const Bureaucrat & bureaucrat){
 	if (bureaucrat.getGrade() < this->signGrade){
 		this->signCheck = true;
 		return true;
@@ -68,6 +69,6 @@ bool Form::signCheckBool(const Bureaucrat & bureaucrat){
 
 std::ostream & operator<<(std::ostream & stream, Form const & form){
 	stream << "Form name = " << form.getName() << " Form signGrade = " << form.getSignGrade()
-	<< " Form executeGrade = " << form.getExecuteGrade() << " Form signCheck = " << form.getSignCheck();
+	<< " Form executeGrade = " << form.getExecuteGrade() << " Form signCheck = " << form.isSigned();
 	return stream;
 }

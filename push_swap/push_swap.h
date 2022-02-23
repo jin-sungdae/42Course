@@ -42,7 +42,7 @@ typedef struct s_vt
 {
 	int	i;
 	int	j;
-	int check;
+	int	check;
 }			t_vt;
 
 void	sa(t_stack *stack);

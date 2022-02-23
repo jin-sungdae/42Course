@@ -12,7 +12,7 @@ int	check_row(char *str, char c)
 		if (str[ef.i] == c)
 			plus_row(str, &ef, c);
 		else if (str[ef.i] == '\''
-				|| str[ef.i] =='\\' || str[ef.i] == '\"')
+			|| str[ef.i] == '\\' || str[ef.i] == '\"')
 			plus_i(str, &ef);
 		else
 			ef.i++;

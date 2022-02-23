@@ -11,7 +11,7 @@ public:
 	Cat & operator=(Cat const & c);
 	virtual Animal & operator=(Animal const & a);
 	virtual void makeSound() const;
-	Brain *getBrain() const;
+	virtual Brain *getBrain() const;
 
 private:
 	Brain *brain;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_1.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sjin <sjin@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/10 20:25:09 by sjin              #+#    #+#             */
+/*   Updated: 2021/03/12 23:34:33 by sjin             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int		minus_function(char **new_nbr, t_options *op, int ret)
@@ -50,17 +62,13 @@ int		width_print_str(char **str, t_options *op, int str_len)
 	if (!(minus_flag = (char*)malloc(sizeof(char) * len + 1)))
 		return (0);
 	while (len-- > 0)
-	{
-		if (op->zero)
-			minus_flag[i++] = '0';
-		else if (op->zero == 0)
-			minus_flag[i++] = ' ';
-	}
+		minus_flag[i++] = (op->zero == 1) ? '0' : ' ';
 	minus_flag[i] = '\0';
 	if (op->minus == 0)
 		*str = ft_strjoin(minus_flag, *str);
 	else if (op->minus)
 		*str = ft_strjoin1(*str, minus_flag);
+	free(minus_flag);
 	return (op->width);
 }
 

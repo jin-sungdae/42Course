@@ -7,11 +7,11 @@ Zombie::Zombie(std::string name)
 
 void Zombie::announceName()
 {
-	std::cout << name << "BraiiiiiiinnnzzzZ..."<< std::endl;
+	std::cout << RED << name << GRN << " BraiiiiiiinnnzzzZ..."<< NC << std::endl;
 }
 
 Zombie :: ~Zombie()
 {
-	std::cout<< name << "은(는) 죽는다" <<std::endl;
+	std::cout << RED << name << GRN << " 은(는) 죽는다" << NC <<std::endl;
 }
 
