@@ -1,6 +1,5 @@
 # get_next_line
 
-# Libft
 ## Production period.
 - (20.12.28 ~ 21.01.14)
 
