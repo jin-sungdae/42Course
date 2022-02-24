@@ -12,3 +12,6 @@ standard functions. This project allows you to re-write those functions, underst
 and learn to use them. This library will help you with all your future C projects.
 Take the time to expand your libft throughout the year. But always, make sure to
 check which functions are allowed !
+
+## Score
+[![sjin's 42Project Score](https://badge42.herokuapp.com/api/project/sjin/Libft)]
