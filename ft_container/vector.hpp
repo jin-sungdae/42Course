@@ -1,9 +1,12 @@
 #include <iostream>
 
+template<typename  T>
 class vector{
 public :
 
-    vector();
+    vector(size_t cap = DEFAULT_CAP) : arr(new T[cap]);
+    vector(vector const & v);
+    vector & operator=(vector const & v);
     ~vector();
     
     // ** iterators ** //
@@ -50,4 +53,8 @@ public :
     // ** Template specializeations ** //
     // vector<bool>
 private:
+    static constexpr size_t DEFAULT_CAP = 32;
+    T* arr;
+    size_t m_size;
+    size_t m_capacity;
 };
