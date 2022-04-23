@@ -4,38 +4,34 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-#include "./iterator/random_access_iterator.hpp"
+#include "./iterator/iterator.hpp"
 
 namespace ft {
-    template<class  T, class Alloc = std::allocator<T>>
+    template<typename T, typename Alloc = std::allocator<T> >
         class vector{
         public :
 
-        typedef T                                               value_type;
-        typedef Alloc                                           allocator_type;
-        typedef typename allocator_type::reference              reference;
-        typedef typename allocator_type::const_referenc         const_reference;
-        typedef typename allocator_type::pointer                pointer;
-        typedef typename allocator_type::const_pointer          const_pointer;
+                typedef T                                               value_type;
+                typedef Alloc                                           allocator_type;
+                typedef typename allocator_type::reference              reference;
+                typedef typename allocator_type::const_referenc         const_reference;
+                typedef typename allocator_type::pointer                pointer;
+                typedef typename allocator_type::const_pointer          const_pointer;
+                typedef ft::iterator<pointer, vector>                   iterator;
+                typedef ft::iterator<const_pointer, vector>             const_iterator;
+                typedef ft::reverse_iterator<iterator>                  reverse_iterator;
+                typedef ft::reverse_iterator<const_iterator>            const_reverse_iterator;
+                typedef ptrdiff_t                                       difference_type;
+                typedef size_t                                          size_type;
 
+                
+        explicit vector (const allocator_type& alloc = allocator_type());
+        explicit vector (size_type n, const value_type& val - value_type(), const allocator_type& alloc = allocator_type());
 
-        explicit vector (const allocator_type& alloc = allocator_type()) : __alloc_(alloc), __start_(nullptr), __end_(nullptr), __end_capacity(nullptr);
-        {}
-        explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : __alloc_(alloc), __start_(nullptr), __end_(nullptr), __end_capacity_(nullptr) {
-            this.__start_ = alloc.allocate(n);
-            this.__end_capacity_ = this.__start_ + n;
-            this.__end_ = this.__start_;
-            while (n--){
-                alloc.construct(this.__end_, val);
-                end++;
-            }
-        }
         template <class InputIterator>
             vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
         vector (const vector& x);
         ~vector();
-    
-        typedef typename std::vector<T>::container_type::iterator iterator;
 
         // ** iterators ** //
         iterator begin();
@@ -114,10 +110,157 @@ namespace ft {
         // ** Template specializeations ** //
         // vector<bool>
     private:
+        struct _Vector_impl : public _Alloc
+		{
+			pointer _start;
+			pointer _finish;
+			pointer _end_of_storage;
+
+			_Vector_impl (void) : allocator_type(), _start(), _finish(), _end_of_storage() {}
+
+			_Vector_impl(_Alloc const& a) : allocator_type(a), _start(), _finish(), _end_of_storage() {}
+
+			void _swap_data (_Vector_impl& x) {
+				ft::swap(_start, x._start);
+				ft::swap(_finish, x._finish);
+				ft::swap(_end_of_storage, x._end_of_storage);
+				}
+		};
+        _Vector_impl	_impl;
         allocator_type __alloc_;
         pointer __start_;
         pointer __end_;
         pointer __end_capacity_;
+        void _init_dispatch(size_type n, const calue_type& val, true_type){
+            this->_impl._start = _allocate(n);
+            this->_impl._end_of_storage = this->_impl._start + n;
+        }
+        
+        template <typename InputIterator>
+        void _init_dispatch(InputIterator first, InputIterator last, false_type){
+            typedef typename ft::iterator_traits<InputIterator>::iterator_category IterCategory;
+            _init_rage(first, last, IterCategory());
+        }
+
+        void _init_fill(size_type n, const value_type& val){
+            pointer cur = this-> _impl._start;
+            try{
+                for (;n > 0; --n, ++cur)
+                    __alloc_.construct(cur, val);
+                this->_impl._finish = cur;
+            } catch (std::exception& e){
+                __alloc.destroy(this->_impl._start);
+                throw;
+            }
+        }
+
+        void _check_range(size_type n){
+            if (n >= size())
+                throw std::out_of_range("Out of Range");
+        }
+
+        void _assign_dispatch(size_type n, value_type& val, true_type){
+            reserve(n);
+            _init_fill(n, val);
+        }
+
+        template<typename InputIterator>
+        void _assign_dispatch(InputIterator first, InputIterator last, false_type){
+            typedef typename ft::iterator_traits<InputIterator>::iterator_category IterCategory;
+            _assign_range(first, last, IterCategory());
+        }
+
+        template <typename InputIterator>
+        void _assign_range(InputIterator first, InputIterator last, ft::input_iterator_tag){
+            try{
+                for (; first != last; ++first)
+                    put_back(*first);
+            } catch (std::exception& e){
+                clear();
+                throw;
+            }
+        }
+
+        template <typename InputIterator>
+        void _assign_range(InputIterator first, InputIterator last, ft::forward_iterator_tag){
+            const size_type n = ft::distance(first, last);
+
+            reserve(n);
+            _cpy_range(first, last);
+        }
+
+        iterator _insert_dispatch(iterator position, size_type n, const value_type& val, true_type){
+            long long pos = position.base() - this->_impl._start;
+            reserve(size() + n);
+            if (pos == static_cast<long long>(size())){
+                for (; n > 0; n--)
+                    push_back(val);
+            } else {
+                this->_impl._finish += n;
+                for (long long i = size() - 1; i >= pos; i--)
+                    this->at(i) = this->at(i - n);
+                for (; n > 0; n--)
+                    __alloc_.construct(this->_impl._start + pos + n - 1, val);
+            }
+            return (iterator(this->_impl._start + pos));
+        }
+
+        template <typename InputIterator>
+        void _insert_dispatch(iterator position, InputIterator first, InputIterator last, false_type){
+            typedef typename ft::iterator_traits<InputIterator>::iterator_category IterCategory;
+            _insert_range(position, first, last, IterCategory());
+        }
+
+        template <typename InputIterator>
+        void _insert_range(iterator position, InputIterator first, InputIterator last, ft::input_iterator_tag){
+            for (;first != last; first++){
+                position = insert(position, *first);
+                position++;
+            }
+        }
+
+        template <typename InputIterator>
+        void _insert_range(iteraotr position, InputIterator first, InputIterator last, ft::forward_iterator_tag){
+            if (first != last){
+                size_type n = ft::distance(first, last);
+                size_type post = position.base() - this->_impl._start;
+                reserve(size() + n);
+                this->_impl._finish += n;
+                for (size_type i = size() - i; i - n >= pos; i--)
+                    this->at(i) = this->at(i - n);
+                last--;
+                for (; n > 0; n--, last--)
+                    __alloc_construct(this->_impl._start + pos + n - 1, * last);
+            }
+        }
+
+    protected:
+        pointer _allocate (size_t n) {
+					allocator_type	alloc;
+					
+					alloc = _get_T_allocator();
+					if (n == 0)
+						return (pointer());
+					else
+						return (alloc.allocate(n));
+				}
+        void _deallocate (pointer p, size_t n)
+				{
+					allocator_type	alloc;
+					
+					alloc = _get_T_allocator();
+					if (p)
+						alloc.deallocate(p, n);
+				}
+        allocator_type& _get_T_allocator (void) {
+		    return (*static_cast<allocator_type*>(&this->_M_impl));
+		}
+
+		const allocator_type& _get_T_allocator (void) const {
+			return (*static_cast<const allocator_type*>(&this->_M_impl));
+		}
+					
+        
     };
 }
 
