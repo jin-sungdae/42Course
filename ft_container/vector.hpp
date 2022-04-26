@@ -108,155 +108,7 @@ namespace ft {
         // ** Template specializeations ** //
         // vector<bool>
     private:
-    //     struct _Vector_impl : public _Alloc
-	// 	{
-	// 		pointer _start;
-	// 		pointer _finish;
-	// 		pointer _end_of_storage;
 
-	// 		_Vector_impl (void) : allocator_type(), _start(), _finish(), _end_of_storage() {}
-
-	// 		_Vector_impl(_Alloc const& a) : allocator_type(a), _start(), _finish(), _end_of_storage() {}
-
-	// 		void _swap_data (_Vector_impl& x) {
-	// 			ft::swap(_start, x._start);
-	// 			ft::swap(_finish, x._finish);
-	// 			ft::swap(_end_of_storage, x._end_of_storage);
-	// 			}
-	// 	};
-    //     _Vector_impl	_impl;
-    //     allocator_type __alloc_;
-    //     pointer __start_;
-    //     pointer __end_;
-    //     pointer __end_capacity_;
-    //     void _init_dispatch(size_type n, const calue_type& val, true_type){
-    //         this->_impl._start = _allocate(n);
-    //         this->_impl._end_of_storage = this->_impl._start + n;
-    //     }
-        
-    //     template <typename InputIterator>
-    //     void _init_dispatch(InputIterator first, InputIterator last, false_type){
-    //         typedef typename ft::iterator_traits<InputIterator>::iterator_category IterCategory;
-    //         _init_rage(first, last, IterCategory());
-    //     }
-
-    //     void _init_fill(size_type n, const value_type& val){
-    //         pointer cur = this-> _impl._start;
-    //         try{
-    //             for (;n > 0; --n, ++cur)
-    //                 __alloc_.construct(cur, val);
-    //             this->_impl._finish = cur;
-    //         } catch (std::exception& e){
-    //             __alloc.destroy(this->_impl._start);
-    //             throw;
-    //         }
-    //     }
-
-    //     void _check_range(size_type n){
-    //         if (n >= size())
-    //             throw std::out_of_range("Out of Range");
-    //     }
-
-    //     void _assign_dispatch(size_type n, value_type& val, true_type){
-    //         reserve(n);
-    //         _init_fill(n, val);
-    //     }
-
-    //     template<typename InputIterator>
-    //     void _assign_dispatch(InputIterator first, InputIterator last, false_type){
-    //         typedef typename ft::iterator_traits<InputIterator>::iterator_category IterCategory;
-    //         _assign_range(first, last, IterCategory());
-    //     }
-
-    //     template <typename InputIterator>
-    //     void _assign_range(InputIterator first, InputIterator last, ft::input_iterator_tag){
-    //         try{
-    //             for (; first != last; ++first)
-    //                 put_back(*first);
-    //         } catch (std::exception& e){
-    //             clear();
-    //             throw;
-    //         }
-    //     }
-
-    //     template <typename InputIterator>
-    //     void _assign_range(InputIterator first, InputIterator last, ft::forward_iterator_tag){
-    //         const size_type n = ft::distance(first, last);
-
-    //         reserve(n);
-    //         _cpy_range(first, last);
-    //     }
-
-    //     iterator _insert_dispatch(iterator position, size_type n, const value_type& val, true_type){
-    //         long long pos = position.base() - this->_impl._start;
-    //         reserve(size() + n);
-    //         if (pos == static_cast<long long>(size())){
-    //             for (; n > 0; n--)
-    //                 push_back(val);
-    //         } else {
-    //             this->_impl._finish += n;
-    //             for (long long i = size() - 1; i >= pos; i--)
-    //                 this->at(i) = this->at(i - n);
-    //             for (; n > 0; n--)
-    //                 __alloc_.construct(this->_impl._start + pos + n - 1, val);
-    //         }
-    //         return (iterator(this->_impl._start + pos));
-    //     }
-
-    //     template <typename InputIterator>
-    //     void _insert_dispatch(iterator position, InputIterator first, InputIterator last, false_type){
-    //         typedef typename ft::iterator_traits<InputIterator>::iterator_category IterCategory;
-    //         _insert_range(position, first, last, IterCategory());
-    //     }
-
-    //     template <typename InputIterator>
-    //     void _insert_range(iterator position, InputIterator first, InputIterator last, ft::input_iterator_tag){
-    //         for (;first != last; first++){
-    //             position = insert(position, *first);
-    //             position++;
-    //         }
-    //     }
-
-    //     template <typename InputIterator>
-    //     void _insert_range(iteraotr position, InputIterator first, InputIterator last, ft::forward_iterator_tag){
-    //         if (first != last){
-    //             size_type n = ft::distance(first, last);
-    //             size_type post = position.base() - this->_impl._start;
-    //             reserve(size() + n);
-    //             this->_impl._finish += n;
-    //             for (size_type i = size() - i; i - n >= pos; i--)
-    //                 this->at(i) = this->at(i - n);
-    //             last--;
-    //             for (; n > 0; n--, last--)
-    //                 __alloc_construct(this->_impl._start + pos + n - 1, * last);
-    //         }
-    //     }
-
-    // protected:
-    //     pointer _allocate (size_t n) {
-	// 				allocator_type	alloc;
-					
-	// 				alloc = _get_T_allocator();
-	// 				if (n == 0)
-	// 					return (pointer());
-	// 				else
-	// 					return (alloc.allocate(n));
-	// 			}
-    //     void _deallocate (pointer p, size_t n)
-	// 			{
-	// 				allocator_type	alloc;
-					
-	// 				alloc = _get_T_allocator();
-	// 				if (p)
-	// 					alloc.deallocate(p, n);
-	// 			}
-    //     allocator_type& _get_T_allocator (void) {
-	// 	    return (*static_cast<allocator_type*>(&this->_M_impl));
-	// 	}
-
-	// 	const allocator_type& _get_T_allocator (void) const {
-	// 		return (*static_cast<const allocator_type*>(&this->_M_impl));
-	// 	}
 					
         
     };
@@ -474,19 +326,198 @@ namespace ft {
                 _size--;
             _alloc.destroy(_array + _size);
         }
-        
-        template <class InputIterator>
-            void insert (iterator position, InputIterator first, InputIterator last);
-        
-        iterator erase (iterator position);
-        
-        iterator erase (iterator first, iterator last);
-        
-        template <class T, class Alloc>
-            void swap (vector<T,Alloc>& x, vector<T,Alloc>& y);
-    
 
-        void get_allocator();
+        template <typename T, typename Alloc>
+        typename vector<T, Alloc>::iterator vector<T, Alloc>::insert (iterator position, const value_type & val){
+            size_t  idx;
+            int put_position_ptr_flag = 0;
+
+            _capacity = increase_capacity(_size, 0, _capacity);
+            T* tmp = _alloc.allocate(_capacity);
+            size_type   tmp_capacity = _capacity;
+            size_type   tmp_size     = _size;
+            for (size_t i = 0; i < _size + 1; i++){
+                if (put_position_ptr_flag == 0 && _array + i == position._ptr){
+                    _alloc.construct(tmp + i, val);
+                    put_position_ptr_flag = 1;
+                    idx = i;
+                }
+                else
+                    _alloc.construct(tmp + i, *(_array + i - put_position_ptr_flag));
+            }
+            Array_clear_free(_size, _capacity, &_array, _alloc);
+            _array = ymp;
+            _size = tmp_size + 1;
+            _capacity = tmp_capacity;
+            return (iterator(this->begin() + idx));
+        }
+
+        template <typename T, typename Alloc>
+        void    vector<T, Alloc>::insert (iterator positon, size_type n, const value_type& val{
+            if (n != 0){
+                size_t      j=0;
+                int         put_position_ptr_flag = 0;
+
+                _capacity = increase_capacity(_size, n, _capacity);
+                T *tmp = _alloc.allocate(_capacity);
+                size_type tmp_capacity = _capacity;
+                size_type tmp_size = _size;
+                for (size_t i = 0; i < _size + n + 1; i++){
+                    if (put_position_ptr_flag == 0 && _array + i == position._ptr){
+                        for (j = 0; j < n; j++){
+                            _alloc.construct(tmp + i + j, val);
+                        }
+                        put_position_ptr_flag = 1;
+                        i = i + j;
+                    }
+                    else {
+                        _alloc.construct(tmp + i - put_postion_ptr_flag, *(_array + (i - j) - put_position_ptr_flag))
+                    }
+                }
+                Array_clear_free(_size, _capacity, &)array, _alloc);
+                _array = tmp;
+                _capacity = tmp_capacity;
+                _size = tmp_size + n;
+            }
+        }
+        template <typename T, typename Alloc>
+        template <class InputIterator>
+            void insert (iterator position, InputIterator first, InputIterator last){
+                int put_position_ptr_flag = 0;
+                int j = 0;
+                difference_type cnt = distance<T, InputIterator>(first, last);
+                size_type tmp_size = cnt + _size;
+                size_type tmp_capacity = increase_capacity(_size, cnt, _capacity);
+                T* tmp = _alloc.allocate(tmp_capacity);
+                for (size_t i = 0; i < _size + cnt + 1; i++){
+                    if (put_position_ptr_flag != 1 && _array + i == position._ptr){
+                        for (j = 0; first != last; first++){
+                            _alloc.construct(tmp + i + j, (*first));
+                            j++
+                        }
+                        put_position_ptr_flag = 1;
+                        i = i + j;
+                    }
+                    else {
+                        _alloc.construct(tmp + i - put_position_ptr_flag, *(_array + (i - j) - put_position_ptr_flag));
+                    }
+                }
+                Array_clear_free(_size, _capacity, &_array, _alloc);
+                _array = tmp;
+                _capacity = tmp_capacity;
+                _size = tmp_size;
+            }
+        
+        template <typename T, typename Alloc>
+        typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator position){
+            size_t  idx = 0;
+            T *tmp = _array;
+            for (size_t i = 0; i < _size; i++){
+                if (tmp == position._ptr){
+                    idx = i;
+                    _alloc.destroy(_array+ i);
+                    for (; i < _size; i++){
+                        _alloc.construct(_array + i, *(_array + i + 1));
+                        _alloc.destroy(tmp + i);
+                    }
+                    _size--;
+                }
+                tmp++;
+            }
+            return (iterator(_array + idx));
+        }
+        
+        template <typenmae T, typename Alloc>
+        typename vector<T, Alloc>::iterator vector<T, Alloc>::erase (iterator first, iterator last) {
+            size_t  idx = 0;
+            T *tmp = _array;
+            difference_type lenght = last - first;
+            if (length > 0){
+                for (size_t i = 0; i < _size; i++){
+                    if (tmp == first._ptr){
+                        idx = i;
+                        for (int j = 0; first != last; first++, j++)
+                            _alloc.destroy(_array + i + j);
+                        for (; i < _size - length; i++){
+                            _alloc.construct(_array + i, *(_array + i + lenght));
+                            _alloc.destroy(_array + i + length);
+                        }
+                        _size = _size - length;
+                    }
+                    tmp++;
+                }
+            }
+            return iterator(_array + idx);
+        }
+
+        template <typename T, typename Alloc>
+        void vector<T, Alloc>::clear(){
+            for (size_t i = 0; i < _size; i++){
+                _alloc.destroy(_array + i);
+            }
+            _size = 0;
+        }
+
+        template <typename T, typename Alloc>
+        typename::ft::vector<T, Alloc>::allocator_type  vector<T, Alloc>::get_allocator() const{
+            return (_alloc);
+        }
+
+        template <typename T, typename Alloc>
+        void vector<T, Alloc>::swap(vector & x){
+            allocator_type  tmp_alloc = _alloc;
+            T*  tmp_array = _array;
+            size_type tmp_size = _size;
+            size_type tmp_capacity = _capacity;
+
+            _alloc = x._alloc;
+            _array = x._array;
+            _size = x._size;
+            _capacity = x._capacity;
+
+            x._alloc = tmp_alloc;
+            x._array = tmp_array;
+            x._size = tmp_size;
+            x._capacity = tmp_capacity;
+        }
+
+        template <class T, class Alloc>
+        void swap (vector<T,Alloc>& x, vector<T,Alloc>& y){
+            x.swap(y);
+        }
+
+        template <typename T, typename Alloc>
+        bool operator== (const ft::vector<T, Alloc>& one, const ft::vector<T, Alloc>& two){
+            if (one.size() != two.size()){
+                return false;
+            }
+            return (ft::equal(one.begin(), one.end(), two.begin()) ? true : false);
+        }
+
+        template <typename T, typename Alloc>
+        bool operator!= (const ft::vector<T, Alloc>& one, const ft::vector<T, Alloc>& two){
+            return (!(one == two));
+        }
+
+        template <typename T, typename Alloc>
+        bool operator< (const ft::vector<T, Alloc>& one, const ft::vector<T, Alloc>& two){
+            return one < two;
+        }
+
+        template <typename T, typename Alloc>
+        bool operator<= (const ft::vector<T, Alloc>& one, const ft::vector<T, Alloc>& two){
+            return one <= two;
+        }
+
+        template <typename T, typename Alloc>
+        bool operator> (const ft::vector<T, Alloc>& one, const ft::vector<T, Alloc>& two){
+            return one > two;
+        }
+
+        template <typename T, typename Alloc>
+        bool operator>= (const ft::vector<T, Alloc>& one, const ft::vector<T, Alloc>& two){
+            return one >= two;
+        }
 }
 
 #endif
