@@ -25,13 +25,15 @@ template < class Key,                                     // map::key_type
            class Compare = less<Key>,                     // map::key_compare
            class Alloc = std::allocator<ft::pair<const Key,T>>    // map::allocator_type
            > class map{
+               private:
+
     public :
         typedef Key     key_type;
         typedef T       mapped_type;
         typedef pair<Key, T> value_type;
-        typedef compare     key_compare;
-        class   value_compare
-        typedef typename    Alloc       allocator_type;
+        typedef Compare     key_compare;
+        class   value_compare;
+        typedef Alloc       allocator_type;
         typedef typename    allocator_type::reference       reference;
         typedef typename    allocator_type::const_reference const_reference;
         typedef typename    allocator_type::pointer         pointer;
@@ -46,6 +48,8 @@ template < class Key,                                     // map::key_type
         typedef ft::reverse_iterator<iterator>                  reverse_iterator;
         typedef ft::reverse_iterator<const_iterator>            const_reverse_iterator;
 
+        typedef ptrdiff_t   difference_type;
+        typedef size_t      size_type;
 
 
 
@@ -88,6 +92,6 @@ template < class Key,                                     // map::key_type
         void get_allocator();
     private:
     };
-}
+};
 
 #endif

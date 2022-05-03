@@ -518,6 +518,6 @@ namespace ft {
         bool operator>= (const ft::vector<T, Alloc>& one, const ft::vector<T, Alloc>& two){
             return one >= two;
         }
-}
+};
 
 #endif
