@@ -106,11 +106,11 @@ namespace ft {
         }
 
     template <typename node_ptr, typename alloc_t>
-    void BST_RemoveNode(node_ptr *deleteNode, node_ptr *node, alloc_t allocNode){
+    void BST_RemoveNode(node_ptr *deleteNode, node_ptr *node, alloc_t allocNode) {
         node_ptr temp = NULL;
         node_ptr *deleteTemp = node;
 
-        if ((*deleteNode)->parent){
+        if ((*deleteNode)->parent) {
             if ((*deleteNode)->parent->leftNode == *deleteNode)
                 deleteTemp = &(*deleteNode)->parent->leftNode;
             else
@@ -139,9 +139,7 @@ namespace ft {
         }
         *deleteTemp = temp;
         allocNode.deallocate((*deleteNode), 1);
-    }
-
-    
+    }   
 }
 
 #endif
