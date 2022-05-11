@@ -4,12 +4,13 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-#include "./iterator/iterator.hpp"
+#include "./vector_iterator.hpp"
+#include "./utils.hpp"
 
 namespace ft {
     template<typename T, typename Alloc = std::allocator<T> >
-        class vector{
-        public :
+    class vector{
+    public :
 
                 typedef T                                               value_type;
                 typedef Alloc                                           allocator_type;
@@ -17,10 +18,10 @@ namespace ft {
                 typedef typename allocator_type::const_referenc         const_reference;
                 typedef typename allocator_type::pointer                pointer;
                 typedef typename allocator_type::const_pointer          const_pointer;
-                typedef ft::iterator<pointer, vector>                   iterator;
-                typedef ft::iterator<const_pointer, vector>             const_iterator;
-                typedef ft::reverse_iterator<iterator>                  reverse_iterator;
-                typedef ft::reverse_iterator<const_iterator>            const_reverse_iterator;
+                typedef vector_iterator<value_type>                     iterator;
+                typedef vector_iterator<const value_type>               const_iterator;
+                typedef reverse_iterator_tag<iterator>                  reverse_iterator;
+                typedef reverse_iterator_tag<const_iterator>            const_reverse_iterator;
                 typedef ptrdiff_t                                       difference_type;
                 typedef size_t                                          size_type;
 
@@ -33,9 +34,12 @@ namespace ft {
         explicit vector (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
 
         template <class InputIterator>
-            vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
+            vector (InputIterator first, InputIterator last,
+             const allocator_type& alloc = allocator_type(), 
+             typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = nullptr);
         vector (const vector& x);
         ~vector();
+        vector& operator= (const vector& rhd); 
 
         // ** iterators ** //
         iterator begin();
@@ -106,11 +110,7 @@ namespace ft {
         // swap
 
         // ** Template specializeations ** //
-        // vector<bool>
-    private:
-
-					
-        
+        // vector<bool>  
     };
 
     //////////////////////////////////////==============================/////////////////////////////////////////////
@@ -118,16 +118,16 @@ namespace ft {
     vector<T, Alloc>::vector (const allocator_type & alloc) : _alloc(alloc), _array(0), _size(0), _capacity(0){}
 
     template <typename T, typename Alloc>
-    vector (size_type n, const value_type& val , const allocator_type& alloc) : _alloc(alloc), _array(0), _size(n), _capacity(n) {
+    vector<T, Alloc>::vector (size_type n, const value_type& val , const allocator_type& alloc) : _alloc(alloc), _array(0), _size(n), _capacity(n) {
        _array = _alloc.allocate(_capacity);
        for (size_t i = 0; i < _size; i++)
             _alloc.construct(_array + i, val);
    }
 
-   template <typename T, typename Alloc>                //>>>>>>>?
+   template <typename T, typename Alloc>            
    template <typename InputIterator>
-   vector<T, Alloc>::vector (InputIterator first, InputIterator last, const allocator_type& alloc) : _alloc(alloc), _array(0), _size(0), _capacity(0){
-       typedef typename ft::is_integer<InputIterator>::type is_int;
+   vector<T, Alloc>::vector (InputIterator first, InputIterator last, const allocator_type& alloc, typename enable_if<is_integral<InputIterator>::value, InputIterator>::type*) : _alloc(alloc), _array(0), _size(0), _capacity(0)
+   {
        this->assign(first, last);
    }
 
@@ -283,8 +283,22 @@ namespace ft {
     }
 
     //////////////////////////////////////==============================/////////////////////////////////////////////
+        template <typename T, class Alloc>
         template <class InputIterator>
-            void assign (InputIterator first, InputIterator last);          // ?
+        void        vector<T, Alloc>::assign (InputIterator first, InputIterator last, typename enable_if<is_integral<InputIterator>::value > :: type*)
+        {
+            ptrdiff_t distan_value = distance<InputIterator>(first, last);
+            pointer     tmp_array = _alloc.allocate(distance_value);
+            for (int i = 0; first != last; i++)
+            {
+                _alloc.construct((tmp_array + i), (*first));
+                first++;
+            }
+            Array_clear_free(_size, _capacity, &_array, _alloc);
+            _size = distan_value;
+		    _capacity = distan_value;
+		    _array = tmp_array;
+        }
         
         template <typename T, typename Alloc>
         void    vector<T, Alloc>::assign(size_type n, const value_type& val){

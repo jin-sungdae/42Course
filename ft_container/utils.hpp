@@ -4,7 +4,7 @@
 #include <memory>
 #include <iostream>
 #include "vector.hpp"
-#include "iterator/iterator.hpp"
+
 namespace ft{
     template <typename T>
     void swap(T & a, T& b){
@@ -72,99 +72,19 @@ namespace ft{
         return (it2 != b.end());
     }
 
-    struct true_type {};
-	struct false_type {};
-
-	template<typename _Tp>
-		struct is_integer
+   	template <typename size_type, typename value_type, typename Alloc>
+	void Array_clear_free(size_type &_size, size_type &_capacity, value_type** _array, Alloc _alloc)
+	{
+		if ((*_array) != NULL)
 		{
-			enum { value = 0 };
-			typedef false_type type;
-		};
-
-	template<>
-		struct is_integer<bool>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<char>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<signed char>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<unsigned char>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<short>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<unsigned short>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<int>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<unsigned int>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<long>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<unsigned long>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<long long>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
-
-	template<>
-		struct is_integer<unsigned long long>
-		{
-			enum { value = 1 };
-			typedef true_type type;
-		};
+			for (size_t i = 0; i < _size; ++i)
+				_alloc.destroy((*_array) + i);
+			_alloc.deallocate((*_array), _capacity);
+			(*_array) = 0;
+			_size = 0;
+			_capacity = 0;
+		}
+	}
 }
 
 #endif
