@@ -4,10 +4,10 @@
 
 namespace ft
 {
-    template<bool, typename T = void>
+    template<bool Ch, typename T = void>
     struct enable_if {};
 
-    template <typenmae T>
+    template <typename T>
     struct enable_if <true, T>
     {
         typedef T type;
@@ -21,40 +21,32 @@ namespace ft
         static const value_type value = _bool;
     };
 
-    template <class Ty>
+    template <class T>
     struct is_integral : public integral_constant<T, false> {} ;
     template <>
     struct is_integral<bool> : public integral_constant<bool, true> {};
     template <>
     struct is_integral<char> : public integral_constant<char, true> {};
-     template <>
-    struct is_integral<unsigned char> : public integral_constant<unsigned char, true> {};
-     template <>
-    struct is_integral<signed char> : public integral_constant<signed char, true> {};
-     template <>
-    struct is_integral<wchar_t> : public integral_constant<wchar_t true> {};
-     template <>
-    struct is_integral<short> : public integral_constant<short, true> {};
-     template <>
-    struct is_integral<unsigned short> : public integral_constant<unsigned short, true> {};
-     template <>
-    struct is_integral<int> : public integral_constant<int, true> {};
-     template <>
-    struct is_integral<unsigned int> : public integral_constant<unsigned int, true> {};
-     template <>
-    struct is_integral<long> : public integral_constant<long, true> {};
-     template <>
-    struct is_integral<unsigned long> : public integral_constant<unsigned long, true> {};
     template <>
-    struct is_integral<short int> : public integral_constant<short int, true>{};
+    struct is_integral<unsigned char> : public integral_constant<unsigned char, true> {};
+    template <>
+    struct is_integral<signed char> : public integral_constant<signed char, true> {};
+    template <>
+    struct is_integral<wchar_t> : public integral_constant<wchar_t, true> {};
+    template <>
+    struct is_integral<short> : public integral_constant<short, true> {};
+    template <>
+    struct is_integral<unsigned short> : public integral_constant<unsigned short, true> {};
+    template <>
+    struct is_integral<int> : public integral_constant<int, true> {};
     template <>
     struct is_integral<long int> : public integral_constant<long int, true> {};
     template <>
     struct is_integral<long long int> : public integral_constant<long long int, true>{};
     template <>
-    struct is_integral <unsigned short int> : public integral_constant<unsgined short int, true> {};
-    template<>
-	struct is_integral<unsigned long int> : public integral_constant<unsigned long int, true> {} ;
+    struct is_integral<unsigned int> : public integral_constant<unsigned int, true> {};
+    template <>
+    struct is_integral<unsigned long> : public integral_constant<unsigned long, true> {};
 	template<>
 	struct is_integral<unsigned long long int> : public integral_constant<unsigned long long, true> {} ;
 	template<>
@@ -77,7 +69,7 @@ namespace ft
 		typedef Reference reference;
 	};
 
-    template <typename Iterator> 
+    template <class iterator> 
     struct iterator_traits
     {
         typedef typename iterator::value_type            value_type;
@@ -140,7 +132,7 @@ namespace ft
 
         vector_iterator&    operator--();
         vector_iterator     operator--(int);
-        vector_iterator&    operator==(const vector_iterator &vi)
+        vector_iterator&    operator=(const vector_iterator &vi)
         {
             if (this == &vi)
                 return (*this);
@@ -152,9 +144,10 @@ namespace ft
         vector_iterator     operator+(difference_type n) const;
         vector_iterator     operator-(difference_type n) const;
         template<typename T>
-        difference_type     operator-(const vector_iteratorT> &vi) const;
+        difference_type     operator-(const vector_iterator<T> &vi) const;
         template<typename T>
-        difference_type     operator+(const vector_iteratorT> &vi) const;
+        difference_type     operator+(const vector_iterator<T> &vi) const;
+
         template<typename T>
         bool                operator<(const vector_iterator<T> & vi) const;
         template<typename T>
@@ -164,8 +157,9 @@ namespace ft
         template<typename T>
         bool                operator>=(const vector_iterator<T> & vi) const;
         vector_iterator&    operator+=(difference_type n);
-        vecotr_iterator&    operator-=(difference_type n);
+        vector_iterator&    operator-=(difference_type n);
         RandomIterator& operator[](const difference_type n) const;
+        
         operator vector_iterator<const RandomIterator> () const
         {
             return (vector_iterator<const RandomIterator>(this->_ptr));
@@ -242,14 +236,14 @@ namespace ft
 
     template <typename RandomIterator>
     template <typename T>
-    typename iterator_traits<RandomIterator*>::difference_type vector_iterator<RandomIterator>::operator-(const vector_iterator<T> & vi)
+    typename iterator_traits<RandomIterator*>::difference_type vector_iterator<RandomIterator>::operator-(const vector_iterator<T> & vi) const
     {
         return (this->_ptr - vi._ptr);
     }
 
     template <typename RandomIterator>
     template <typename T>
-    typename iterator_traits<RandomIterator*>::difference_type vector_iterator<RandomIterator>::operator+(const vector_iterator<T> & vi)
+    typename iterator_traits<RandomIterator*>::difference_type vector_iterator<RandomIterator>::operator+(const vector_iterator<T> & vi) const
     {
         return (this->_ptr + vi._ptr);
     }
@@ -316,7 +310,7 @@ namespace ft
         iterator_type   _ptr;
     public:
         reverse_iterator_tag() : _ptr() {};
-        reverse_iterator_tag(iterator_type ptr) : _ptr(ptr);
+        reverse_iterator_tag(iterator_type ptr) : _ptr(ptr) {};
         template<class T>
         reverse_iterator_tag(const reverse_iterator_tag<T> & rit) : _ptr(rit.base()) {};
         virtual ~reverse_iterator_tag() {}
@@ -390,9 +384,9 @@ namespace ft
     };
 
     template <class iterator>
-    reverse_iterator_tag<Iterator> operator+ (typename reverse_iterator_tag<Iterator>::difference_type n, const reverse_iterator_tag<Iterator>& rit)
+    reverse_iterator_tag<iterator> operator+ (typename reverse_iterator_tag<iterator>::difference_type n, const reverse_iterator_tag<iterator>& rit)
     {
-        return (reverse_iterator_tag<Iterator>(rit.base() - n));
+        return (reverse_iterator_tag<iterator>(rit.base() - n));
     }
 
     template <class iterator1, class iterator2>

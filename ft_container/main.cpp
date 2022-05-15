@@ -1,340 +1,116 @@
-#include <map>
 #include <iostream>
-#include <time.h>
-#include "define.hpp"
-#include "map.hpp"
+#include <string>
+#include <deque>
+// #if 1 //CREATE A REAL STL EXAMPLE
+// 	#include <map>
+// 	#include <stack>
+// 	#include <vector>
+// 	namespace ft = std;
+// #else
+// 	#include <map.hpp>
+// 	#include <stack.hpp>
+// 	#include <vector.hpp>
+// #endif
+#include ".vector.hpp"
+#include ".vector_iterator.hpp"
+#include <stdlib.h>
 
-template<typename T1, typename T2>
-void print_map(TESTED_NAMESPACE::map<T1, T2> map) {
-	typename TESTED_NAMESPACE::map<T1, T2>::const_iterator start = map.begin();
-	typename TESTED_NAMESPACE::map<T1, T2>::const_iterator end = map.end();
+#define MAX_RAM 4294967296
+#define BUFFER_SIZE 4096
+struct Buffer
+{
+	int idx;
+	char buff[BUFFER_SIZE];
+};
 
+#define COUNT (MAX_RAM / (int)sizeof(Buffer))
 
-	std::cout << "[ " ;
-	while (start != end) {
-		std::cout << start->first << " : " << start->second << ", ";
-		start++;
-	}
-	std::cout << " ]" << std::endl;
-}
-
-
-int main(void) {
-	clock_t start, end;
-	start = clock();
-
-	std::cout << "=====================================" << std::endl;
-	std::cout << "===============[ MAP ]===============" << std::endl;
-	std::cout << "=====================================" << std::endl;
-
-	std::cout << "----------------------- Constructor " << std::endl;
+template<typename T>
+class MutantStack : public ft::stack<T>
+{
+public:
+	MutantStack() {}
+	MutantStack(const MutantStack<T>& src) { *this = src; }
+	MutantStack<T>& operator=(const MutantStack<T>& rhs) 
 	{
-		std::cout << "> default constructor" << std::endl;
+		this->c = rhs.c;
+		return *this;
+	}
+	~MutantStack() {}
 
-		TESTED_NAMESPACE::map<int, std::string> m1;
+	typedef typename ft::stack<T>::container_type::iterator iterator;
 
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
+	iterator begin() { return this->c.begin(); }
+	iterator end() { return this->c.end(); }
+};
 
-		std::cout << "> range constructor" << std::endl;
-		std::cout << "> 1: one, 2: two, 3: three 추가" << std::endl;
-		m1[1] = "one";
-		m1[2] = "two";
-		m1[3] = "three";
-		TESTED_NAMESPACE::map<int, std::string> m2(m1.begin(), m1.end());
+int main(int argc, char** argv) {
+	if (argc != 2)
+	{
+		std::cerr << "Usage: ./test seed" << std::endl;
+		std::cerr << "Provide a seed please" << std::endl;
+		std::cerr << "Count value:" << COUNT << std::endl;
+		return 1;
+	}
+	const int seed = atoi(argv[1]);
+	srand(seed);
 
-		std::cout << "🚛 m  ( size : " << m2.size() << " )" << std::endl;
-		print_map(m2);
-		std::cout << std::endl;
-		
-		std::cout << "> copy constructor" << std::endl;
+	ft::vector<std::string> vector_str;
+	ft::vector<int> vector_int;
+	ft::stack<int> stack_int;
+	ft::vector<Buffer> vector_buffer;
+	ft::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
+	ft::map<int, int> map_int;
 
-		TESTED_NAMESPACE::map<int, std::string> m3(m2);
-
-		std::cout << "🚛 m  ( size : " << m3.size() << " )" << std::endl;
-		print_map(m3);
-		std::cout << std::endl;
-
-		std::cout << "> operator = " << std::endl;
-		TESTED_NAMESPACE::map<int, std::string> m4 = m3;
-
-		std::cout << "🚛 m  ( size : " << m4.size() << " )" << std::endl;
-		print_map(m4);
-		std::cout << std::endl;
+	for (int i = 0; i < COUNT; i++)
+	{
+		vector_buffer.push_back(Buffer());
 	}
 
-	std::cout << "----------------------- Iterators " << std::endl;
+	for (int i = 0; i < COUNT; i++)
 	{
-		TESTED_NAMESPACE::map<int, std::string> m1;
+		const int idx = rand() % COUNT;
+		vector_buffer[idx].idx = 5;
+	}
+	ft::vector<Buffer>().swap(vector_buffer);
 
-		m1[1] = "one";
-		m1[2] = "two";
-		m1[3] = "three";
-
-
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-		std::cout << "> begin " << std::endl;
-		std::cout << "🚛 m.begin()  => " << m1.begin()->first << " : " << m1.begin()->second << std::endl;
-		std::cout << std::endl;
-		std::cout << "> end " << std::endl;
-		std::cout << "🚛 m.end() - 1  => " << (--m1.end())->first << " : " << (--m1.end())->second << std::endl;
-		std::cout << std::endl;
-		std::cout << "> rbegin " << std::endl;
-		std::cout << "🚛 m.rbegin()  => " << m1.rbegin()->first << " : " << m1.rbegin()->second << std::endl;
-		std::cout << std::endl;
-		std::cout << "> rend " << std::endl;
-		std::cout << "🚛 m.rend() - 1  => " << (--m1.rend())->first << " : " << (--m1.rend())->second << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "> itertor 로 출력" << std::endl;
-		std::cout << "🚛 m " << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-
-		std::cout << "> reverse itertor 로 출력" << std::endl;
-		TESTED_NAMESPACE::map<int, std::string>::reverse_iterator m_rit = m1.rbegin();
-
-		std::cout << "🚛 m " << std::endl;
-		while (m_rit != m1.rend()) {
-			std::cout << m_rit->first << " : " << m_rit->second << std::endl;
-			m_rit++;
+	try
+	{
+		for (int i = 0; i < COUNT; i++)
+		{
+			const int idx = rand() % COUNT;
+			vector_buffer.at(idx);
+			std::cerr << "Error: THIS VECTOR SHOULD BE EMPTY!!" <<std::endl;
 		}
-		std::cout << std::endl;
 	}
-	std::cout << "----------------------- Capacity " << std::endl;
+	catch(const std::exception& e)
 	{
-		TESTED_NAMESPACE::map<int, std::string> m1;
-		std::cout << "> empty - 비어있는 경우" << std::endl;
-		std::cout << "🚛 m " << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-		std::cout << "🚛 m1.empty() => " << m1.empty() << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "> empty - 비어있지 않은 경우 " << std::endl;
-		m1[1] = "hi";
-		std::cout << "🚛 m " << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-		std::cout << "🚛 m1.empty() => " << m1.empty() << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "> size " << std::endl;
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-
-		std::cout << "> size - 요소 3개 추가" << std::endl;
-		m1[2] = "hoylee2";
-		m1[3] = "hoylee3";
-		m1[4] = "hoylee4";
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-
-		std::cout << "> max_size " << std::endl;
-		std::cout << "🚛 m.max_size()  => " << m1.max_size() << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "----------------------- Element access " << std::endl;
-		std::cout << "> operator[] " << std::endl;
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-
-		std::cout << "🚛 m[1] : " << m1[1] << std::endl;
-		std::cout << "🚛 m[2] : " << m1[2] << std::endl;
-		std::cout << "🚛 m[3] : " << m1[3] << std::endl;
-		std::cout << "🚛 m[4] : " << m1[4] << std::endl;
-
+		//NORMAL ! :P
 	}
-
-	std::cout << "----------------------- Modifiers " << std::endl;
+	
+	for (int i = 0; i < COUNT; ++i)
 	{
-		TESTED_NAMESPACE::map<std::string, int> m1;
-		std::cout << "> insert1 " << std::endl;
-		std::cout << "> [hoylee, 42] 추가 " << std::endl;
-		TESTED_NAMESPACE::pair<TESTED_NAMESPACE::map<std::string, int>::iterator, bool> m_pair;
-		std::cout << "=====================" << std::endl;
-		m_pair = m1.insert(TESTED_NAMESPACE::make_pair<std::string, int>("hoylee", 42));
-
-		TESTED_NAMESPACE::map<std::string, int>::iterator m1_i= m1.begin();
-		m1.insert(TESTED_NAMESPACE::make_pair<std::string, int>("adylee", 52));
-		std::cout << "🚛 m_i  ( m1_iter : " << (*(m1_i)).first << " )" << std::endl;
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << "insert return : " << m_pair.second << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "> 같은 key 한번 더 insert" << std::endl;
-		m_pair = m1.insert(TESTED_NAMESPACE::make_pair<std::string, int>("hoylee", 42));
-
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << "insert return : " << m_pair.second << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "> insert2 [yong: 100]" << std::endl;
-		m1.insert(m1.begin(), TESTED_NAMESPACE::pair<std::string, int>("yong", 100));
-
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-
-		std::cout << "> insert3 [one: 1, two: 2, three:3] " << std::endl;
-		TESTED_NAMESPACE::map<std::string, int> m2;
-
-		m2["one"] = 1;
-		m2["two"] = 2;
-		m2["three"] = 3;
-		
-		m1.insert(m2.begin(), m2.end());
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-
-		std::cout << "> erase1 - begin()" << std::endl;
-		m1.erase(m1.begin());
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-
-//		std::cout << "> erase2 key - yong" << std::endl;
-//		std1.erase("yong");
-//		m1.erase("yong");
-////		//설명 : 이거 ambigous 에러나는데, 못잡겠음 .ㅠ.ㅠ.ㅠ.ㅠ.ㅠ.ㅠ.ㅠ :
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-		std::cout << "> erase3 begin(), ++begin()" <<  std::endl;
-
-		m1.erase(m1.begin(), (++m1.begin()));
-		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
-
-		std::cout << "> swap " << std::endl;
-		std::cout << "🚛 m1  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << "🚛 m2  ( size : " << m2.size() << " )" << std::endl;
-		print_map(m2);
-		std::cout << std::endl;
-		std::cout << "> 1.swap(2)" << std::endl;
-		m1.swap(m2);
-		std::cout << "🚛 m1  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << "🚛 m2  ( size : " << m2.size() << " )" << std::endl;
-		print_map(m2);
-		std::cout << std::endl;
-
-		std::cout << "> clear 1" << std::endl;
-		m1.clear();
-		std::cout << "🚛 m1  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << std::endl;
+		map_int.insert(ft::make_pair(rand(), rand()));
 	}
 
-	std::cout << "----------------------- Observers " << std::endl;
+	int sum = 0;
+	for (int i = 0; i < 10000; i++)
 	{
-		TESTED_NAMESPACE::map<std::string, int> m1;
-		TESTED_NAMESPACE::map<std::string, int>::key_compare m_comp = m1.key_comp();
-
-		m1["abc"] = 100;
-		m1["aaa"] = 200;
-		m1["abd"] = 300;
-
-		std::string highest2 = m1.rbegin()->first;
-
-		std::cout << "> key_comp " << std::endl;
-		TESTED_NAMESPACE::map<std::string,int>::iterator m_it = m1.begin();
-
-		std::cout << "🚛 m1  ( size : " << m1.size() << " )" << std::endl;
-		do {
-			std::cout << m_comp((*m_it).first, highest2) << std::endl;
-			std::cout << m_it->first << " => " << m_it->second << '\n';
-		} while ( m_comp((*m_it++).first, highest2) );
-		std::cout << std::endl;
-
-		std::cout << "> value_comp " << std::endl;
-
-		m_it = m1.begin();
-
-		TESTED_NAMESPACE::pair<std::string, int> v_highest2 = *m1.rbegin();
-
-		std::cout << "🚛 m1  ( size : " << m1.size() << " )" << std::endl;
-		do {
-			std::cout << m1.value_comp()(*m_it, v_highest2) << std::endl;
-			std::cout << m_it->first << " => " << m_it->second << '\n';
-		} while ( m1.value_comp()(*m_it++, v_highest2) );
-		std::cout << std::endl;
+		int access = rand();
+		sum += map_int[access];
 	}
+	std::cout << "should be constant with the same seed: " << sum << std::endl;
 
-	std::cout << "----------------------- Operations " << std::endl;
 	{
-		TESTED_NAMESPACE::map<int, std::string> m1;
-
-		m1[0] = "zero";
-		m1[1] = "one";
-		m1[2] = "two";
-
-
-		std::cout << "> find " << std::endl;
-		std::cout << "🚛 m1  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-		std::cout << "🚛 m1.find(0) => " << m1.find(0)->second << std::endl;
-		std::cout << "🚛 m1.find(1) => " << m1.find(1)->second << std::endl;
-		std::cout << "🚛 m1.find(2) => " << m1.find(2)->second << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "> count " << std::endl;
-		for (int i = -1; i < 4; i++) {
-			std::cout << "🚛 m1.find(" << i << ") => ";
-			if (m1.count(i) > 0)
-				std::cout << "is an element" << std::endl;
-			else
-				std::cout << "is not an element" << std::endl;
-		}
-		std::cout << std::endl;
-
-		std::cout << "> lower_bound " << std::endl;
-		m1[4] = "four";
-		m1[6] = "six";
-		m1[8] = "eight";
-		std::cout << "🚛 m1  ( size : " << m1.size() << " )" << std::endl;
-		print_map(m1);
-
-		std::cout << "🚛 m1.lower_bound(3)  => " << m1.lower_bound(3)->first << " : " << m1.lower_bound(3)->second << std::endl;
-		std::cout << std::endl;
-
-		std::cout << "> upper_bound " << std::endl;
-		std::cout << "🚛 m1.upper_bound(3)  => " << m1.upper_bound(3)->first << " : " << m1.upper_bound(3)->second << std::endl;
-		std::cout << std::endl;
-		std::cout << "> equal_range " << std::endl;
-		TESTED_NAMESPACE::pair<TESTED_NAMESPACE::map<int, std::string>::iterator, TESTED_NAMESPACE::map<int, std::string>::iterator> m_it_pair;
-		m_it_pair = m1.equal_range(1);
-		std::cout << "🚛 m  : " << m_it_pair.first->first << " => " << m_it_pair.first->second << std::endl;
-		std::cout << "🚛 m  : " << m_it_pair.second->first << " => " << m_it_pair.second->second << std::endl;
-		std::cout << std::endl;
+		ft::map<int, int> copy = map_int;
 	}
-
-	std::cout << "----------------------- Allocator " << std::endl;
+	MutantStack<char> iterable_stack;
+	for (char letter = 'a'; letter <= 'z'; letter++)
+		iterable_stack.push(letter);
+	for (MutantStack<char>::iterator it = iterable_stack.begin(); it != iterable_stack.end(); it++)
 	{
-		std::cout << "> get_allocator " << std::endl;
-		int m_size;
-		TESTED_NAMESPACE::map<char, int> m1;
-		TESTED_NAMESPACE::pair<const char, int>* m_p;
-
-		m_p = m1.get_allocator().allocate(5);
-
-		m_size = sizeof(TESTED_NAMESPACE::map<char,int>::value_type) * 5;
-
-		std::cout << "🚛 m  : The allocated array has a size of " << m_size << " bytes.\n";
-
-		m1.get_allocator().deallocate(m_p, 5);
-
+		std::cout << *it;
 	}
-    end = clock();
-    std::cout << "result : " << (double)(end - start) << std::endl;
+	std::cout << std::endl;
+	return (0);
 }

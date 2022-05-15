@@ -18,6 +18,7 @@ namespace ft
         typedef value_type*         pointer;
 
         map_iterator(void);
+
         template <typename mapIt>
         map_iterator(const mapIt &it);
 
@@ -49,6 +50,13 @@ namespace ft
     {
         this->_node = src;
     }
+    
+    template <typename T, typename node_type>
+    template <typename mapIt>
+    map_iterator<T, node_type>::map_iterator(const mapIt &it)
+    {
+        this->_node = it._node;
+    }
 
     template <typename T, typename node_type>
     map_iterator<T, node_type>::~map_iterator(void) 
@@ -76,7 +84,7 @@ namespace ft
     template <class U>
     bool    map_iterator<T, node_type>::operator!=(const map_iterator<U, node_type> & a) const
     {
-        return (this->_node == a._node);
+        return (this->_node != a._node);
     }
 
     template <typename T, typename node_type>
@@ -137,13 +145,13 @@ namespace ft
     }
 
     template <typename T, typename node_type>
-    typename map_iterator<T, node_type>::reference  map_iterator<T, node_type>::operator*(void)
+    typename map_iterator<T, node_type>::reference  map_iterator<T, node_type>::operator*(void) const
     {
         return (this->_node->data);
     }
 
     template <typename T, typename node_type>
-    typename map_iterator<T, node_type>::pointer    map_iterator<T, node_type>::operator->(void)
+    typename map_iterator<T, node_type>::pointer    map_iterator<T, node_type>::operator->(void) const
     {
         return &(this->operator*());
     }
