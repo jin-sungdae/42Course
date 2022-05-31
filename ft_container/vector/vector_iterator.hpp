@@ -1,5 +1,5 @@
-#ifndef VECTOR_ITERATOR_HPP
-#define VECTOR_ITERATOR_HPP
+#ifndef __VECTOR_ITERATOR_HPP__
+#define __VECTOR_ITERATOR_HPP__
 #include <iostream>
 
 namespace ft
@@ -97,7 +97,7 @@ namespace ft
     };
 
     template <typename T, class InputIterator>
-    typename iterator_traits<T*>::difference_type   distance(InputIterator first, InputIterator last)
+    typename iterator_traits<T*>::difference_type   new_distance(InputIterator first, InputIterator last)
     {
         typename iterator_traits<T*>::difference_type res = 0;
         while (first != last)
@@ -145,9 +145,11 @@ namespace ft
         vector_iterator     operator-(difference_type n) const;
         template<typename T>
         difference_type     operator-(const vector_iterator<T> &vi) const;
-        template<typename T>
-        difference_type     operator+(const vector_iterator<T> &vi) const;
 
+        friend vector_iterator	operator+(difference_type n, const vector_iterator &rhd) 
+		{
+			return rhd.operator+(n);
+		}
         template<typename T>
         bool                operator<(const vector_iterator<T> & vi) const;
         template<typename T>
@@ -239,13 +241,6 @@ namespace ft
     typename iterator_traits<RandomIterator*>::difference_type vector_iterator<RandomIterator>::operator-(const vector_iterator<T> & vi) const
     {
         return (this->_ptr - vi._ptr);
-    }
-
-    template <typename RandomIterator>
-    template <typename T>
-    typename iterator_traits<RandomIterator*>::difference_type vector_iterator<RandomIterator>::operator+(const vector_iterator<T> & vi) const
-    {
-        return (this->_ptr + vi._ptr);
     }
 
     template <typename RandomIterator>
@@ -388,6 +383,12 @@ namespace ft
     {
         return (reverse_iterator_tag<iterator>(rit.base() - n));
     }
+
+    template <class iterator_left, class iterator_right>
+	ptrdiff_t operator- (const reverse_iterator_tag<iterator_left>& lhs, const reverse_iterator_tag<iterator_right>& rhs)
+	{
+		return (rhs.base() - lhs.base()); 
+	}
 
     template <class iterator1, class iterator2>
     bool operator== (const reverse_iterator_tag<iterator1> & lhs, const reverse_iterator_tag<iterator2> & rhs)

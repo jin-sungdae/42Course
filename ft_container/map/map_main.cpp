@@ -2,11 +2,11 @@
 #include <iostream>
 #include <time.h>
 #include "../util/define.hpp"
-#include "map.hpp"
-#include "map_iterator.hpp"
+#include "../includes/map.hpp"
 #include <string>
 
-template<typename T1, typename T2>
+
+template<typename T1,  typename T2>
 void print_map(TESTED_NAMESPACE::map<T1, T2> map) {
 	typename TESTED_NAMESPACE::map<T1, T2>::const_iterator start = map.begin();
 	typename TESTED_NAMESPACE::map<T1, T2>::const_iterator end = map.end();
@@ -34,7 +34,7 @@ int main(void) {
 		std::cout << "> default constructor" << std::endl;
 
 		TESTED_NAMESPACE::map<int, std::string> m1;
-	
+
 		std::cout << "😎 m  ( size : " << m1.size() << " )" << std::endl;
 		print_map(m1);
 		std::cout << std::endl;
@@ -73,6 +73,7 @@ int main(void) {
 		m1[1] = "one";
 		m1[2] = "two";
 		m1[3] = "three";
+
 
 		std::cout << "😎 m  ( size : " << m1.size() << " )" << std::endl;
 		print_map(m1);
@@ -116,7 +117,7 @@ int main(void) {
 		std::cout << std::endl;
 
 		std::cout << "> empty - 비어있지 않은 경우 " << std::endl;
-		m1[1] = "hi";
+		m1[1] = "sjin1";
 		std::cout << "😎 m " << std::endl;
 		print_map(m1);
 		std::cout << std::endl;
@@ -129,10 +130,10 @@ int main(void) {
 		std::cout << std::endl;
 
 		std::cout << "> size - 요소 3개 추가" << std::endl;
-		m1[2] = "hoylee2";
-		m1[3] = "hoylee3";
-		m1[4] = "hoylee4";
-		std::cout << "😎 m  ( size : " << m1.size() << " )" << std::endl;
+		m1[2] = "sjin2";
+		m1[3] = "sjin3";
+		m1[4] = "sjin4";
+		std::cout << "🚛 m  ( size : " << m1.size() << " )" << std::endl;
 		print_map(m1);
 		std::cout << std::endl;
 
@@ -156,10 +157,10 @@ int main(void) {
 	{
 		TESTED_NAMESPACE::map<std::string, int> m1;
 		std::cout << "> insert1 " << std::endl;
-		std::cout << "> [hoylee, 42] 추가 " << std::endl;
+		std::cout << "> [sjin, 42] 추가 " << std::endl;
 		TESTED_NAMESPACE::pair<TESTED_NAMESPACE::map<std::string, int>::iterator, bool> m_pair;
 		std::cout << "=====================" << std::endl;
-		m_pair = m1.insert(TESTED_NAMESPACE::make_pair<std::string, int>("hoylee", 42));
+		m_pair = m1.insert(TESTED_NAMESPACE::make_pair<std::string, int>("sjin", 42));
 
 		TESTED_NAMESPACE::map<std::string, int>::iterator m1_i= m1.begin();
 		m1.insert(TESTED_NAMESPACE::make_pair<std::string, int>("adylee", 52));
@@ -170,7 +171,7 @@ int main(void) {
 		std::cout << std::endl;
 
 		std::cout << "> 같은 key 한번 더 insert" << std::endl;
-		m_pair = m1.insert(TESTED_NAMESPACE::make_pair<std::string, int>("hoylee", 42));
+		m_pair = m1.insert(TESTED_NAMESPACE::make_pair<std::string, int>("sjin", 42));
 
 		std::cout << "😎 m  ( size : " << m1.size() << " )" << std::endl;
 		print_map(m1);
@@ -202,10 +203,6 @@ int main(void) {
 		print_map(m1);
 		std::cout << std::endl;
 
-//		std::cout << "> erase2 key - yong" << std::endl;
-//		std1.erase("yong");
-//		m1.erase("yong");
-////		//설명 : 이거 ambigous 에러나는데, 못잡겠음 .ㅠ.ㅠ.ㅠ.ㅠ.ㅠ.ㅠ.ㅠ :
 		std::cout << "😎 m  ( size : " << m1.size() << " )" << std::endl;
 		print_map(m1);
 		std::cout << std::endl;

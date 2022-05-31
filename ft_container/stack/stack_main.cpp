@@ -1,8 +1,8 @@
 #include <stack>
 #include <vector>
 #include <time.h>
-#include "stack.hpp"
-#include "../vector/vector.hpp"
+#include "../includes/stack.hpp"
+#include "../includes/vector.hpp"
 #include "../util/define.hpp"
 
 
@@ -14,6 +14,25 @@ void print_stack(T s) {
 		s.pop();
 	}
 }
+
+template<typename T>
+class MutantStack : public ft::stack<T>
+{
+public:
+	MutantStack() {}
+	MutantStack(const MutantStack<T>& src) { *this = src; }
+	MutantStack<T>& operator=(const MutantStack<T>& rhs) 
+	{
+		this->c = rhs.c;
+		return *this;
+	}
+	~MutantStack() {}
+
+	typedef typename ft::stack<T>::container_type::iterator iterator;
+
+	iterator begin() { return this->c.begin(); }
+	iterator end() { return this->c.end(); }
+};
 
 int main() {
 	clock_t start, end;

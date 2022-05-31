@@ -2,10 +2,12 @@
 #include <vector>
 #include <string>
 #include <time.h>
+#include <list>
 
-#include "vector.hpp"
+#include "../includes/vector.hpp"
 #include "vector_iterator.hpp"
 #include "../util/define.hpp"
+
 
 
 template<typename T>
@@ -124,7 +126,7 @@ int main() {
 		std::cout << std::endl;
 
 		std::cout << "  [ resize test - (2) ]" << std::endl;
-		// 나중에 추가 필요
+
 		std::cout << "> 2칸으로 resize" << std::endl;
 		ft2.resize(2);
 		std::cout << "😎 ft  ( size : " << ft2.size() << " )" << std::endl;

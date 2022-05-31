@@ -1,5 +1,5 @@
-#ifndef VECTOR_HPP
-# define VECTOR_HPP
+#ifndef __VECTOR_HPP__
+# define __VECTOR_HPP__
 
 #include <iostream>
 #include <memory>
@@ -295,7 +295,7 @@ namespace ft {
         template <class InputIterator>
         void        vector<T, Alloc>::assign (InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value > :: type*)
         {
-            ptrdiff_t distan_value = distance<InputIterator>(first, last);
+            ptrdiff_t distan_value = new_distance<InputIterator>(first, last);
             pointer     tmp_array = _alloc.allocate(distan_value);
             for (int i = 0; first != last; i++)
             {
@@ -420,7 +420,7 @@ namespace ft {
 			int										put_position_ptr_flag = 0;
 		    int										j = 0;
 
-		    difference_type cnt = distance<T, InputIterator>(first, last);
+		    difference_type cnt = new_distance<T, InputIterator>(first, last);
 		    size_type tmp_size = cnt + _size;
 		    size_type tmp_capacity = increase_capacity(_size, cnt, _capacity);
 		    T* tmp = _alloc.allocate(tmp_capacity);
@@ -516,6 +516,7 @@ namespace ft {
             size_type tmp_size = _size;
             size_type tmp_capacity = _capacity;
 
+            
             _alloc = x._alloc;
             _array = x._array;
             _size = x._size;
