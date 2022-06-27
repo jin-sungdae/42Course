@@ -1,37 +1,56 @@
 version: '3'
 
+networks:
+    app-networks:
+        name: app-networks
+        driver: bridge
+
 volumes:
-        data: {}
+    wp:
+        driver: local
+        name: wp
+        driver_opts:
+            type: none
+            o: bind
+            device: /home/sjin/data/wordpress
+    db:
+        driver: local
+        name: db
+        driver_opts:
+            type: none
+            o: bind
+            device: /home/sjin/data/mariadb
 
 services:
-        mariadb:
-              image: debian:buster
-              restart: always
-              expose:
-                - "3306"
-              networks:
-                - intra
-              tty: true
-        nginx:
-            image: debian:buster
-            restart: always
-            ports:
-                - "443:443"
-            volumes:
-                  -data:/var/www/html
-            networks:
-                - intra
-            tty: true
-        wordpress:
-            image: debian:buster
-            restart: always
-            volumes:
-                -data:/var/www/html
-            expose:
-                - "9000"
-            networks:
-                - intra
-            tty: true
+    mariadb:
+        container_name: mariadb
+        build: ./requirements/mariadb
+        env_file:
+            - .env
+        volumes:
+            -db:/var/lib/mysql
         networks:
-          intra:
-              driver: bridge
+            - app-network
+        restart: unless-stopped
+
+    wordpress:
+        container_name: wordpress
+        build: ./requirements/wordpress
+        env_file:
+            - .env
+        networks:
+            - app-network
+        restart: unless-stopped
+    
+    nginx:
+        container_name: nginx
+        build: ./requirements/nginx
+        ports:
+            -"443:443"
+        depends_on:
+            - wordpress
+        volumes:
+            - wp:/var/www/html
+        networks:
+            - app-network
+        restart: unless-stopped
