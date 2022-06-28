@@ -1,8 +1,8 @@
 version: "3.5"
 
 networks:
-    app-networks:
-        name: app-networks
+    app-network:
+        name: app-network
         driver: bridge
 
 volumes:
