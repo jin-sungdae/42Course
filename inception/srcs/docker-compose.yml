@@ -1,4 +1,4 @@
-version: '3'
+version: "3.5"
 
 networks:
     app-networks:
@@ -28,7 +28,7 @@ services:
         env_file:
             - .env
         volumes:
-            -db:/var/lib/mysql
+            - db:/var/lib/mysql
         networks:
             - app-network
         restart: unless-stopped
@@ -38,6 +38,10 @@ services:
         build: ./requirements/wordpress
         env_file:
             - .env
+        depends_on:
+            - mariadb
+        volumes:
+            - wp:/var/www/html
         networks:
             - app-network
         restart: unless-stopped
@@ -46,7 +50,7 @@ services:
         container_name: nginx
         build: ./requirements/nginx
         ports:
-            -"443:443"
+            - "443:443"
         depends_on:
             - wordpress
         volumes:
