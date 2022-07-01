@@ -33,26 +33,26 @@ services:
     #         - app-network
     #     restart: unless-stopped
 
-    wordpress:
-        container_name: wordpress
-        build: ./requirements/wordpress
-        env_file:
-            - .env
-        # depends_on:
-        #     - mariadb
-        volumes:
-            - wp:/var/www/html
-        networks:
-            - app-network
-        restart: unless-stopped
+    # wordpress:
+    #     container_name: wordpress
+    #     build: ./requirements/wordpress
+    #     env_file:
+    #         - .env
+    #     # depends_on:
+    #     #     - mariadb
+    #     volumes:
+    #         - wp:/var/www/html
+    #     networks:
+    #         - app-network
+    #     restart: unless-stopped
     
     nginx:
         container_name: nginx
         build: ./requirements/nginx
         ports:
             - 443:443
-        depends_on:
-            - wordpress
+        # depends_on:
+        #     - wordpress
         volumes:
             - wp:/var/www/html
         networks:
