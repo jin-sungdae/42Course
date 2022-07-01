@@ -5,8 +5,8 @@ networks:
         name: app-network
         driver: bridge
 
-volumes: {}
-    # wp: 
+volumes: 
+    wp: []
     #     driver: local
     #     name: wp
     #     driver_opts:
