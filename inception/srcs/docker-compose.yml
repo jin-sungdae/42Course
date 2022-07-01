@@ -1,9 +1,9 @@
 version: "3.5"
 
 networks:
-    app-network: {}
-        # name: app-network
-        # driver: bridge
+    app-network: 
+        name: app-network
+        driver: bridge
 
 volumes:
     wp: {}
