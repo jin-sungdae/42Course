@@ -15,6 +15,13 @@ curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compo
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
+## volume directory 만들기
+mkdir -p /home/sjin/data/wordpress
+mkdir -p /home/sjin/data/mariadb
+
+## inception 실행
+make
+
 
 
 
