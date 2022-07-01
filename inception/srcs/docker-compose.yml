@@ -22,7 +22,7 @@ volumes:
         #     device: /home/sjin/data/mariadb
 
 services:
-    mariadb:
+    mariadb: 
         container_name: mariadb
         build: ./requirements/mariadb
         env_file:
